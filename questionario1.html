@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Questionário de Segurança Viária - ONSV</title>
+    
+    <!-- Tailwind CSS para estilização moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --accent-color: #ffc107;
+            --background-light: #f4f7f6;
+            --background-white: #ffffff;
+            --text-dark: #343a40;
+            --text-muted: #868e96;
+            --border-color: #e9ecef;
+            --border-radius-lg: 12px;
+            --border-radius-md: 8px;
+            --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --correct-color: #28a745;
+            --incorrect-color: #dc3545;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background-light);
+            margin: 0;
+            padding: 24px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+        .container-principal {
+            width: 100%;
+            max-width: 1024px;
+            background: var(--background-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-light);
+            overflow: hidden;
+            transition: height 0.3s ease-in-out;
+        }
+        .progresso-header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 20px 30px;
+        }
+        .progresso-header h2 { 
+            margin: 0; 
+            font-weight: 600; 
+            font-size: 1.6rem;
+            text-align: center;
+        }
+        #autoavaliacao-form, #resultado-wrapper { padding: 30px; }
+        .categoria-passo.ativo { display: block; animation: fadeIn .4s ease-out; }
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px)} to {opacity: 1; transform: translateY(0)} }
+        
+        .pergunta { 
+            margin: 25px 0; 
+            padding: 20px; 
+            border: 1px solid var(--border-color); 
+            border-radius: var(--border-radius-md); 
+            background-color: #fcfcfc;
+            transition: all 0.2s ease;
+        }
+        .pergunta:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+        .pergunta h4 { 
+            margin: 0 0 12px; 
+            font-size: 1.15rem; 
+            color: var(--text-dark); 
+            font-weight: 500;
+        }
+        .opcoes-resposta label {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 14px 18px; 
+            border: 1px solid var(--border-color); 
+            border-radius: var(--border-radius-md); 
+            margin: 10px 0;
+            cursor: pointer; 
+            transition: .2s border-color, .2s background-color, .2s box-shadow;
+            background-color: var(--background-white);
+        }
+        .opcoes-resposta label:hover { 
+            background: var(--background-light); 
+        }
+        .opcoes-resposta input[type="radio"] { 
+            margin-top: 4px; 
+            min-width: 18px;
+            min-height: 18px;
+            accent-color: var(--primary-color);
+        }
+        .opcoes-resposta label:has(input[type="radio"]:checked) { 
+            border-color: var(--primary-color); 
+            background: #eef7ff;
+        }
+
+        /* Estilos para respostas corretas e incorretas */
+        .opcoes-resposta label.correct {
+            border-color: var(--correct-color);
+            background-color: #e9f7ef;
+        }
+        .opcoes-resposta label.incorrect {
+            border-color: var(--incorrect-color);
+            background-color: #fceaea;
+        }
+        .opcoes-resposta input[type="radio"]:disabled {
+             accent-color: var(--secondary-color);
+        }
+        .opcoes-resposta label.correct, .opcoes-resposta label.incorrect {
+            cursor: default;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px 25px; 
+            border: none; 
+            border-radius: var(--border-radius-md); 
+            font-weight: 600; 
+            cursor: pointer;
+            transition: .2s transform, .2s background-color, .2s box-shadow;
+            font-size: 1rem;
+            background: var(--primary-color); 
+            color: #fff; 
+            margin-top: 30px;
+        }
+        .btn-submit:hover {
+            background: #0056b3;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .btn-submit:active { transform: translateY(1px); }
+        .btn-submit:disabled { background: var(--secondary-color); cursor: not-allowed; }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .progresso-header h2 { font-size: 1.4rem; }
+            #autoavaliacao-form, #resultado-wrapper { padding: 20px; }
+            .pergunta { padding: 15px; }
+            .pergunta h4 { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-principal">
+    <div id="questionario-wrapper">
+        <header class="progresso-header">
+            <h2>Autoavaliação de Segurança Viária</h2>
+        </header>
+        
+        <form id="autoavaliacao-form" novalidate>
+            <div class="categoria-passo ativo" id="categoria-1">
+                <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">Questionário Pré-Ação</h1>
+                <p class="text-center text-gray-600 mb-8">Teste seus conhecimentos sobre a segurança no trânsito no Brasil.</p>
+
+                <!-- Pergunta 1 -->
+                <div class="pergunta" data-question="q1">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">1. Conhecendo a realidade brasileira, o que você acha que mata mais no Brasil?</h4>
+                    <div class="opcoes-resposta space-y-2">
+                        <label>
+                            <input type="radio" name="q1" value="armas_fogo" class="mr-3" required>
+                            <span>Armas de Fogo</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q1" value="transito" class="mr-3">
+                            <span>Trânsito</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q1" value="suicidio" class="mr-3">
+                            <span>Suicídio</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 2 -->
+                <div class="pergunta" data-question="q2">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">2. Entre as crianças de 05 a 14 anos, qual é a principal causa de morte?</h4>
+                    <div class="opcoes-resposta space-y-2">
+                        <label>
+                            <input type="radio" name="q2" value="doencas" class="mr-3" required>
+                            <span>Doenças transmissíveis</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q2" value="afogamento" class="mr-3">
+                            <span>Afogamento</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q2" value="transito" class="mr-3">
+                            <span>Trânsito</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Pergunta 3 -->
+                <div class="pergunta" data-question="q3">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">3. Qual faixa etária mais morre em sinistros de trânsito no Brasil?</h4>
+                    <div class="opcoes-resposta space-y-2">
+                        <label>
+                            <input type="radio" name="q3" value="5-14" class="mr-3" required>
+                            <span>05 a 14 anos</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q3" value="15-29" class="mr-3">
+                            <span>15 a 29 anos</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q3" value="60+" class="mr-3">
+                            <span>60 anos ou mais</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 4 -->
+                <div class="pergunta" data-question="q4">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">4. No mundo, os sinistros de trânsito matam mais do que:</h4>
+                    <div class="opcoes-resposta space-y-2">
+                         <label>
+                            <input type="radio" name="q4" value="hiv" class="mr-3" required>
+                            <span>HIV/AIDS</span>
+                        </label>
+                         <label>
+                            <input type="radio" name="q4" value="cancer" class="mr-3">
+                            <span>Câncer infantil</span>
+                        </label>
+                         <label>
+                            <input type="radio" name="q4" value="ambos" class="mr-3">
+                            <span>Ambos</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 5 -->
+                <div class="pergunta" data-question="q5">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">5. Quem representa a maior parcela das vítimas fatais no trânsito brasileiro?</h4>
+                    <div class="opcoes-resposta space-y-2">
+                         <label>
+                            <input type="radio" name="q5" value="pedestres" class="mr-3" required>
+                            <span>Pedestres</span>
+                        </label>
+                         <label>
+                            <input type="radio" name="q5" value="ciclistas" class="mr-3">
+                            <span>Ciclistas</span>
+                        </label>
+                         <label>
+                            <input type="radio" name="q5" value="motociclistas" class="mr-3">
+                            <span>Motociclistas</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 6 -->
+                <div class="pergunta" data-question="q6">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">6. Quanto o Brasil gasta, em média, com os sinistros de trânsito em relação ao PIB?</h4>
+                    <div class="opcoes-resposta space-y-2">
+                        <label>
+                            <input type="radio" name="q6" value="1-pib" class="mr-3" required>
+                            <span>Menos de 1%</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q6" value="3-pib" class="mr-3">
+                            <span>Cerca de 3%</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q6" value="6-pib" class="mr-3">
+                            <span>Cerca de 6%</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 7 -->
+                <div class="pergunta" data-question="q7">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">7. Qual fator está mais associado à gravidade dos sinistros?</h4>
+                    <div class="opcoes-resposta space-y-2">
+                        <label>
+                            <input type="radio" name="q7" value="velocidade" class="mr-3" required>
+                            <span>Excesso de velocidade</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q7" value="cinto" class="mr-3">
+                            <span>Falta de cinto de segurança</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q7" value="defeito" class="mr-3">
+                            <span>Defeito mecânico</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 8 -->
+                <div class="pergunta" data-question="q8">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">8. O uso de celular ao volante aumenta o risco de sinistros em:</h4>
+                    <div class="opcoes-resposta space-y-2">
+                        <label>
+                            <input type="radio" name="q8" value="50" class="mr-3" required>
+                            <span>50%</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q8" value="100" class="mr-3">
+                            <span>100%</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q8" value="400-mais" class="mr-3">
+                            <span>Mais de 400%</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 9 -->
+                <div class="pergunta" data-question="q9">
+                     <h4 class="font-semibold text-lg text-gray-700 mb-3">9. Em uma colisão a 60 km/h, não usar cinto de segurança no banco traseiro:</h4>
+                    <div class="opcoes-resposta space-y-2">
+                        <label>
+                            <input type="radio" name="q9" value="risco-passageiro" class="mr-3" required>
+                            <span>Só coloca em risco o passageiro sem cinto</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q9" value="morte-frente" class="mr-3">
+                            <span>Pode causar a morte de quem está na frente</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="q9" value="sem-diferenca" class="mr-3">
+                            <span>Não faz diferença significativa</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 10 -->
+                <div class="pergunta" data-question="q10">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">10. Qual seria a medida mais eficaz para reduzir mortes no trânsito?</h4>
+                    <div class="opcoes-resposta space-y-2">
+                         <label>
+                            <input type="radio" name="q10" value="hospitais" class="mr-3" required>
+                            <span>Melhorar os hospitais para atender as vítimas</span>
+                        </label>
+                         <label>
+                            <input type="radio" name="q10" value="investir" class="mr-3">
+                            <span>Investir em fiscalização e prevenção</span>
+                        </label>
+                         <label>
+                            <input type="radio" name="q10" value="reduzir-limites" class="mr-3">
+                            <span>Reduzir os limites de velocidade apenas nas rodovias</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Pergunta 11 (Dissertativa) -->
+                <div class="pergunta">
+                    <h4 class="font-semibold text-lg text-gray-700 mb-3">11. O que mais te preocupa quando pensa em segurança no trânsito?</h4>
+                    <div>
+                        <textarea name="q11" id="q11" rows="4" class="w-full p-3 border rounded-lg" placeholder="Digite sua resposta aqui..." required></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    Enviar Respostas
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Container de Resultados, inicialmente oculto -->
+    <div id="resultado-wrapper" style="display: none;">
+         <header class="progresso-header">
+            <h2>Resultado do Questionário</h2>
+        </header>
+        <div class="p-8">
+            <div id="respostas-corrigidas">
+                <!-- O conteúdo do formulário corrigido será inserido aqui -->
+            </div>
+            <div id="resultado-final" class="my-8 text-center text-2xl font-bold"></div>
+            <button type="button" id="btn-concluir" class="btn-submit">Concluir Questionário</button>
+        </div>
+    </div>
+
+
+    <!-- Container de agradecimento, inicialmente oculto -->
+    <div id="agradecimento-container" style="display: none; padding: 60px 30px; text-align: center;">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">SUAS RESPOSTAS FORAM REGISTRADAS, OBRIGADO!</h2>
+        <button type="button" id="btn-inicio" class="btn-submit" style="max-width: 300px; margin-left: auto; margin-right: auto;">Retornar ao Início</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // !! IMPORTANTE !! Cole a URL do seu App da Web do Google aqui
+    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec';
+
+    const form = document.getElementById('autoavaliacao-form');
+    const questionarioWrapper = document.getElementById('questionario-wrapper');
+    const resultadoWrapper = document.getElementById('resultado-wrapper');
+    const agradecimentoContainer = document.getElementById('agradecimento-container');
+    const btnConcluir = document.getElementById('btn-concluir');
+    const btnInicio = document.getElementById('btn-inicio');
+    const resultadoFinalContainer = document.getElementById('resultado-final');
+    const respostasCorrigidasContainer = document.getElementById('respostas-corrigidas');
+
+    const correctAnswers = {
+        q1: 'transito',
+        q2: 'transito',
+        q3: '15-29',
+        q4: 'ambos',
+        q5: 'motociclistas',
+        q6: '3-pib',
+        q7: 'velocidade',
+        q8: '400-mais',
+        q9: 'morte-frente',
+        q10: 'investir'
+    };
+    
+    // Função para pegar dados do participante da URL
+    function getDadosParticipanteFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const dados = {
+            nome: urlParams.get('nome'),
+            cpf: urlParams.get('cpf'),
+            cidade: urlParams.get('cidade'),
+            estado: urlParams.get('estado'),
+            van: urlParams.get('van')
+        };
+        // Checa se os dados essenciais (CPF, NOME) estão presentes
+        if (!dados.cpf || !dados.nome) {
+            return null;
+        }
+        return dados;
+    }
+
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!form.checkValidity()) {
+            alert('Por favor, responda a todas as perguntas para continuar.');
+            const firstInvalidField = form.querySelector(':invalid');
+            if (firstInvalidField) {
+                const questionContainer = firstInvalidField.closest('.pergunta');
+                if (questionContainer) {
+                    questionContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    questionContainer.style.borderColor = 'red';
+                    setTimeout(() => { questionContainer.style.borderColor = ''; }, 2500);
+                }
+            }
+            return;
+        }
+
+        const submitButton = form.querySelector('.btn-submit');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando...';
+        
+        // Calcula a pontuação
+        let score = 0;
+        Object.keys(correctAnswers).forEach(key => {
+            const selected = form.querySelector(`input[name="${key}"]:checked`);
+            if (selected && selected.value === correctAnswers[key]) {
+                score++;
+            }
+        });
+        
+        // Pega os dados do participante da URL
+        const dadosParticipante = getDadosParticipanteFromURL();
+        if (!dadosParticipante) {
+            alert('Erro: Dados do participante não encontrados. Por favor, preencha o formulário inicial novamente.');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Enviar Respostas';
+            window.location.href = 'index.html'; // Redireciona para o início
+            return;
+        }
+
+        // Prepara o pacote de dados para envio
+        const dataToSend = {
+            questionarioTipo: 1,
+            pontuacao: score,
+            nome: decodeURIComponent(dadosParticipante.nome),
+            cpf: decodeURIComponent(dadosParticipante.cpf),
+            cidade: decodeURIComponent(dadosParticipante.cidade),
+            estado: decodeURIComponent(dadosParticipante.estado),
+            van: decodeURIComponent(dadosParticipante.van),
+            respostaQ11: document.getElementById('q11').value
+        };
+
+        // Envia os dados para o Google Sheets
+        fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataToSend)
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            // Mesmo com erro, continua para exibir os resultados
+        })
+        .finally(() => {
+            exibirResultados(score);
+        });
+    });
+    
+    function exibirResultados(score) {
+        // Marca visualmente as respostas
+        Object.keys(correctAnswers).forEach(key => {
+            const correctAnswer = correctAnswers[key];
+            const selectedOption = form.querySelector(`input[name="${key}"]:checked`);
+            if (selectedOption) {
+                selectedOption.closest('label').classList.add(selectedOption.value === correctAnswer ? 'correct' : 'incorrect');
+            }
+        });
+
+        form.querySelectorAll('input, textarea').forEach(input => input.disabled = true);
+        
+        const formContent = form.querySelector('#categoria-1');
+        respostasCorrigidasContainer.appendChild(formContent);
+        formContent.querySelector('.btn-submit').style.display = 'none';
+
+        resultadoFinalContainer.innerHTML = `Você acertou <span class="text-blue-600">${score}</span> de <span class="text-blue-600">${Object.keys(correctAnswers).length}</span> perguntas.`;
+        
+        questionarioWrapper.style.display = 'none';
+        resultadoWrapper.style.display = 'block';
+    }
+
+    btnConcluir.addEventListener('click', () => {
+        resultadoWrapper.style.display = 'none';
+        agradecimentoContainer.style.display = 'block';
+    });
+    
+    btnInicio.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+});
+</script>
+
+</body>
+</html>
+
