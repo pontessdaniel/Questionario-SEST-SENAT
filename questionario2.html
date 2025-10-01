@@ -144,12 +144,14 @@
         .btn-submit:active { transform: translateY(1px); }
         .btn-submit:disabled { background: var(--secondary-color); cursor: not-allowed; }
 
+        /* Estilos de responsividade */
         @media (max-width: 768px) {
             body { padding: 15px; }
             .progresso-header h2 { font-size: 1.4rem; }
             #autoavaliacao-form, #resultado-wrapper { padding: 20px; }
             .pergunta { padding: 15px; }
             .pergunta h4 { font-size: 1rem; }
+            #agradecimento-container h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -297,7 +299,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     // !! IMPORTANTE !! Cole a URL do seu App da Web do Google aqui
-    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec';
+    const WEB_APP_URL = 'COLE_A_URL_DO_SEU_APP_DA_WEB_AQUI';
 
     const form = document.getElementById('autoavaliacao-form');
     const questionarioWrapper = document.getElementById('questionario-wrapper');
