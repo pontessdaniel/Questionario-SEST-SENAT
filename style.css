@@ -143,7 +143,7 @@ h1, h2, h3, h4 {
 
 /* ---- HERO SECTION ---- */
 .hero-section {
-    background: url('imagens/avenida_03.jpg') no-repeat center center/cover;
+    background: url('imagens/planodefundo_02.jpg') no-repeat center center/cover;
     color: var(--text-color-dark);
     text-align: center;
     padding: 150px 0;
@@ -176,6 +176,38 @@ h1, h2, h3, h4 {
     font-size: 1.2em;
     margin-bottom: 30px;
 }
+
+/* ---- ABOUT SECTION ---- */
+.about-section {
+    padding: 100px 0;
+    background-color: var(--light-bg-alt);
+}
+
+.about-section .container {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h2 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+}
+
+.about-image {
+    flex: 1;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
 
 /* ---- FOOTER ---- */
 .main-footer {
@@ -236,6 +268,9 @@ h1, h2, h3, h4 {
         grid-template-columns: 1fr;
         text-align: center;
     }
+     .about-section .container {
+        flex-direction: column-reverse;
+    }
 }
 
 @media (max-width: 768px) {
@@ -243,10 +278,8 @@ h1, h2, h3, h4 {
         flex-direction: column;
         gap: 15px;
     }
-    .main-nav ul {
-        flex-direction: column;
-        padding: 0;
-        gap: 10px;
+    .main-nav {
+        display: none; /* Esconde o menu principal em telas pequenas */
     }
     .hero-content h1 {
         font-size: 2.5em;
@@ -255,7 +288,7 @@ h1, h2, h3, h4 {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 80%;
+        width: 90%;
     }
      .hero-content a.btn-primary:not(:last-child) {
         margin-bottom: 15px;
