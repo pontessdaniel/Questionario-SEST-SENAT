@@ -9,13 +9,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos adicionados para responsividade */
+        @media (max-width: 768px) {
+            .main-header .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .main-nav {
+                width: 100%;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .form-page {
+                padding: 20px 10px;
+            }
+            .form-group-split {
+                flex-direction: column;
+                gap: 0; /* Remove o gap para usar o margin-bottom do form-group */
+            }
+            .form-group-split .form-group {
+                margin-bottom: 24px; /* Garante espaçamento quando empilhado */
+            }
+            .form-actions {
+                flex-direction: column;
+            }
+            .form-actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="imagens/logo_observatorio-1.jpg" alt="Logo ONSV">
+                <img src="https://placehold.co/150x40/f39c12/FFFFFF?text=ONSV" alt="Logo ONSV">
                 <span>Autoavaliação Municipal <strong>ONSV</strong></span>
             </a>
             <nav class="main-nav">
