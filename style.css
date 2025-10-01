@@ -154,7 +154,7 @@ h1, h2, h3, h4 {
 
 /* ---- HERO SECTION ---- */
 .hero-section {
-    background: url('imagens/planodefundo_02.jpeg') no-repeat center center/cover;
+    background: url('planodefundo_02.jpg') no-repeat center center/cover;
     color: var(--text-color-dark);
     text-align: center;
     padding: 150px 0;
@@ -444,4 +444,56 @@ h1, h2, h3, h4 {
     text-align: center;
     padding: 20px 0;
     font-size: 0.9em;
+}
+
+
+/* ---- MEDIA QUERIES FOR RESPONSIVENESS ---- */
+@media (max-width: 992px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .main-footer .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .main-nav ul {
+        flex-direction: column;
+        padding: 0;
+        gap: 10px;
+    }
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+    .hero-content .btn-primary {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+    }
+     .hero-content a.btn-primary:not(:last-child) {
+        margin-bottom: 15px;
+    }
+    .stats-section .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .stat-item {
+        width: 100%;
+    }
+    .about-section .container {
+        flex-direction: column-reverse;
+    }
+    .features-grid, .categories-grid {
+        grid-template-columns: 1fr;
+    }
 }
