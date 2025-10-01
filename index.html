@@ -9,13 +9,43 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
+    <style>
+        /* Estilos adicionados para responsividade */
+        @media (max-width: 768px) {
+            .main-header .container,
+            .main-footer .container {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .main-nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem; /* Ajuste no tamanho da fonte para telas menores */
+            }
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            .hero-content .btn-primary {
+                display: block; /* Faz os botões ocuparem a largura total */
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            .footer-col {
+                align-items: center; /* Centraliza itens do rodapé */
+            }
+        }
+    </style>
 </head>
 <body>
 
     <header class="main-header">
         <div class="container">
             <a href="#" class="logo">
-                <img src="imagens/logo_observatorio-1.jpg" alt="Logo do Observatório Nacional de Segurança Viária">
+                <!-- Imagem de placeholder para funcionar em qualquer ambiente -->
+                <img src="https://placehold.co/200x50/333333/FFFFFF?text=ONSV+Logo" alt="Logo do Observatório Nacional de Segurança Viária">
                 <span>Autoavaliação Municipal <strong>ONSV</strong></span>
             </a>
             <nav class="main-nav">
@@ -43,7 +73,8 @@
     <footer id="contact" class="main-footer">
         <div class="container">
             <div class="footer-col">
-                <img src="imagens/logo _4.png" alt="Logo do Observatório Nacional de Segurança Viária no rodapé" class="footer-logo">
+                <!-- Imagem de placeholder para funcionar em qualquer ambiente -->
+                <img src="https://placehold.co/180x60/333333/FFFFFF?text=ONSV+Logo" alt="Logo do Observatório Nacional de Segurança Viária no rodapé" class="footer-logo">
                 <p>Trabalhando para reduzir os acidentes de trânsito no Brasil através de tecnologia, educação e políticas públicas baseadas em evidências.</p>
             </div>
             <div class="footer-col">
@@ -70,3 +101,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
