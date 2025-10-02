@@ -67,27 +67,18 @@ h1, h2, h3, h4 {
 }
 
 /* ---- HEADER ---- */
-.main-header .logo {
-    display: flex;
-    flex-direction: column; /* logo em cima, texto embaixo */
-    align-items: center;    /* centraliza horizontalmente */
-    text-align: center;     /* garante centralização do texto */
+.main-header {
+    background: var(--light-bg);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
-
-.main-header .logo span {
-    font-size: 20px; /* ajuste conforme quiser */
-    font-weight: bold;
-    margin-top: 5px;
-}
-
 
 .main-header .container {
     display: flex;
-    justify-content: center; /* centraliza horizontalmente */
-    align-items: center;     /* alinha verticalmente */
-    flex-direction: column;  /* um embaixo do outro */
-    text-align: center;
+    align-items: center;    /* alinha logo e texto verticalmente */
+    justify-content: flex-start; /* logo e texto começam da esquerda */
+    padding: 10px 20px;
 }
+
 .logo {
     display: flex;
     align-items: center;
@@ -96,57 +87,21 @@ h1, h2, h3, h4 {
 }
 
 .logo img {
-    height: 40px;
-    margin-right: 10px;
+    height: 70px; /* aumenta o tamanho da logo */
+    margin-right: 15px;
 }
 
 .logo span {
-    font-size: 1.1em;
-}
-
-.main-nav ul {
-    list-style: none;
-    display: flex;
-}
-
-.main-nav ul li {
-    margin: 0 20px;
-}
-
-.main-nav ul li a {
-    text-decoration: none;
-    color: var(--text-color-light);
+    font-size: 22px;
     font-weight: 600;
-    position: relative;
-    padding-bottom: 5px;
+    color: var(--text-color-light);
 }
 
-.main-nav ul li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    transition: width 0.3s ease;
+/* Barra colorida abaixo do header */
+.header-bar {
+    height: 6px;
+    background: linear-gradient(to right, #e74c3c, #f39c12, #27ae60, #2980b9);
 }
-
-.main-nav ul li a:hover::after {
-    width: 100%;
-}
-
-.btn-login {
-    border: 2px solid var(--primary-color);
-    background-color: transparent;
-    color: var(--primary-color);
-}
-
-.btn-login:hover {
-    background-color: var(--primary-color);
-    color: var(--light-bg);
-}
-
 /* ---- HERO SECTION ---- */
 .hero-section {
     background: url('imagens/planodefundo_02.jpeg') no-repeat center center/cover;
