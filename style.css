@@ -110,6 +110,15 @@ h1, h2, h3, h4 {
         #f9a825,
         #2e7d32,
         #1565c0
+
+}
+
+header .logo img {
+    max-height: 60px; /* controla a altura */
+    width: auto;      /* mantém a proporção */
+    display: inline-block;
+    vertical-align: middle;
+    
     );
 }
 
