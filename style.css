@@ -90,7 +90,7 @@ h1, h2, h3, h4 {
 
 /* aumenta a logo */
 .logo img {
-    height: 200px;  /* pode ajustar pra 100px se quiser ainda maior */
+    height: 150px;  /* pode ajustar pra 100px se quiser ainda maior */
     margin-right: 15px;
 }
 
