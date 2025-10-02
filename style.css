@@ -72,13 +72,15 @@ h1, h2, h3, h4 {
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
+/* container do header */
 .main-header .container {
     display: flex;
-    align-items: center;    /* alinha logo e texto verticalmente */
-    justify-content: flex-start; /* logo e texto começam da esquerda */
-    padding: 10px 20px;
+    align-items: center;         /* logo e texto alinhados verticalmente */
+    justify-content: center;     /* centraliza o conjunto no meio da tela */
+    padding: 15px 20px;
 }
 
+/* logo + título */
 .logo {
     display: flex;
     align-items: center;
@@ -86,22 +88,25 @@ h1, h2, h3, h4 {
     color: var(--text-color-light);
 }
 
+/* aumenta a logo */
 .logo img {
-    height: 100px; /* aumenta o tamanho da logo */
+    height: 100px;  /* pode ajustar pra 100px se quiser ainda maior */
     margin-right: 15px;
 }
 
+/* título */
 .logo span {
     font-size: 25px;
     font-weight: 600;
     color: var(--text-color-light);
 }
 
-/* Barra colorida abaixo do header */
+/* barra colorida */
 .header-bar {
-    height: 6px;
+    height: 10px; /* mais grossa que a anterior */
     background: linear-gradient(to right, #e74c3c, #f39c12, #27ae60, #2980b9);
 }
+
 /* ---- HERO SECTION ---- */
 .hero-section {
     background: url('imagens/planodefundo_02.jpeg') no-repeat center center/cover;
