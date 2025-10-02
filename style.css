@@ -87,12 +87,12 @@ h1, h2, h3, h4 {
 }
 
 .logo img {
-    height: 70px; /* aumenta o tamanho da logo */
+    height: 100px; /* aumenta o tamanho da logo */
     margin-right: 15px;
 }
 
 .logo span {
-    font-size: 22px;
+    font-size: 25px;
     font-weight: 600;
     color: var(--text-color-light);
 }
