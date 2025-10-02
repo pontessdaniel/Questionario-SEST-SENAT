@@ -67,21 +67,27 @@ h1, h2, h3, h4 {
 }
 
 /* ---- HEADER ---- */
-.main-header {
-    background-color: var(--light-bg);
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.main-header .logo {
+    display: flex;
+    flex-direction: column; /* logo em cima, texto embaixo */
+    align-items: center;    /* centraliza horizontalmente */
+    text-align: center;     /* garante centralização do texto */
 }
+
+.main-header .logo span {
+    font-size: 20px; /* ajuste conforme quiser */
+    font-weight: bold;
+    margin-top: 5px;
+}
+
 
 .main-header .container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center; /* centraliza horizontalmente */
+    align-items: center;     /* alinha verticalmente */
+    flex-direction: column;  /* um embaixo do outro */
+    text-align: center;
 }
-
 .logo {
     display: flex;
     align-items: center;
