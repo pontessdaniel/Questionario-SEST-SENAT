@@ -78,8 +78,9 @@ h1, h2, h3, h4 {
 
 .main-header .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* centraliza tudo */
     align-items: center;
+    text-align: center;
 }
 
 .logo {
@@ -90,55 +91,26 @@ h1, h2, h3, h4 {
 }
 
 .logo img {
-    height: 40px;
-    margin-right: 10px;
+    height: 50px; /* pode ajustar o tamanho */
+    margin-right: 12px;
 }
 
 .logo span {
-    font-size: 1.1em;
-}
-
-.main-nav ul {
-    list-style: none;
-    display: flex;
-}
-
-.main-nav ul li {
-    margin: 0 20px;
-}
-
-.main-nav ul li a {
-    text-decoration: none;
-    color: var(--text-color-light);
+    font-size: 1.3em;
     font-weight: 600;
-    position: relative;
-    padding-bottom: 5px;
 }
 
-.main-nav ul li a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-.main-nav ul li a:hover::after {
-    width: 100%;
-}
-
-.btn-login {
-    border: 2px solid var(--primary-color);
-    background-color: transparent;
-    color: var(--primary-color);
-}
-
-.btn-login:hover {
-    background-color: var(--primary-color);
-    color: var(--light-bg);
+.main-header::after {
+    content: "";
+    display: block;
+    height: 5px;
+    background: linear-gradient(
+        to right,
+        #c62828, /* vermelho */
+        #f9a825, /* amarelo */
+        #2e7d32, /* verde */
+        #1565c0  /* azul */
+    );
 }
 
 /* ---- HERO SECTION ---- */
