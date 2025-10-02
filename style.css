@@ -90,7 +90,7 @@ h1, h2, h3, h4 {
 
 /* aumenta a logo */
 .logo img {
-    height: 300px;  /* pode ajustar pra 100px se quiser ainda maior */
+    height: 200px;  /* pode ajustar pra 100px se quiser ainda maior */
     margin-right: 15px;
 }
 
@@ -109,17 +109,15 @@ h1, h2, h3, h4 {
 
 /* ---- HERO SECTION ---- */
 .hero-section {
-    background: url('imagens/planodefundo_02.jpeg') no-repeat center center/cover;
-    color: var(--text-color-dark);
-    text-align: center;
-    min-height: 100vh;   /* ocupa 100% da tela */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    padding: 0 20px;     /* só espaçamento lateral */
-    margin: 0;           /* garante que não tenha espaçamento embaixo */
+  background: url('imagens/planodefundo_02.jpeg') no-repeat center center/cover;
+  min-height: 100vh;      /* ocupa a tela inteira */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
+
 
 .hero-section::after {
     content: '';
