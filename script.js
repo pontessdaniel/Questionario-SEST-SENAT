@@ -1,7 +1,7 @@
 // CÓDIGO FINAL - VOLTANDO A USAR application/json
 
 document.addEventListener('DOMContentLoaded', () => {
-    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec';
+    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbz-mBfyfRxPhW50MVLYPJ8w5Kio8LyDNEAj1q62JUQT/dev';
 
     const form = document.getElementById('municipio-form');
     const btnVoltar = document.getElementById('btn-voltar');
