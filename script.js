@@ -1,8 +1,7 @@
-// CÓDIGO FINAL - FAZ A VERIFICAÇÃO E BLOQUEIA O USUÁRIO
+// VERSÃO FINAL COM JSONP
 
 document.addEventListener('DOMContentLoaded', () => {
-    // COLE AQUI A URL DO SEU WEB APP (A QUE TERMINA COM /exec)
-    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec';
+    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec'; // Sua URL /exec
 
     const form = document.getElementById('municipio-form');
     const btnVoltar = document.getElementById('btn-voltar');
@@ -12,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'index.html';
     });
 
-    form.addEventListener('submit', async function(event) {
+    form.addEventListener('submit', function(event) {
         event.preventDefault();
 
         if (!this.checkValidity()) {
@@ -29,31 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const urlParams = new URLSearchParams(window.location.search);
         const questionarioId = urlParams.get('q');
         
-        const verificationData = {
-            action: 'verify_cpf',
-            cpf: cpf,
-            quizId: questionarioId
-        };
+        // --- LÓGICA JSONP ---
+        const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
         
-        try {
-            const response = await fetch(WEB_APP_URL, {
-                method: 'POST',
-                cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
-                redirect: 'follow',
-                body: JSON.stringify(verificationData)
-            });
-            
-            const result = await response.json();
+        // Cria uma função global temporária para receber a resposta
+        window[callbackName] = function(data) {
+            // Limpeza: remove o script e a função global
+            document.body.removeChild(script);
+            delete window[callbackName];
 
-            if (result.status === 'found') {
+            // Analisa a resposta
+            if (data.status === 'found') {
                 alert('Este CPF já respondeu a este questionário. Obrigado!');
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = originalButtonText;
-                return; // PARA O PROCESSO AQUI
+                return;
             }
-            
-            if (result.status === 'not_found') {
+
+            if (data.status === 'not_found') {
+                // Se não encontrou, prossegue para o questionário
                 const nome = encodeURIComponent(document.getElementById('nome').value);
                 const email = encodeURIComponent(document.getElementById('email').value);
                 const cidade = encodeURIComponent(document.getElementById('municipio').value);
@@ -65,15 +58,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 window.location.href = proximaPagina;
             } else {
-                // Se deu um erro inesperado no script do Google
-                throw new Error(result.message || 'Ocorreu um erro desconhecido na verificação.');
+                alert('Ocorreu um erro na verificação: ' + data.message);
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = originalButtonText;
             }
+        };
 
-        } catch (error) {
-            console.error('Erro ao verificar o CPF:', error);
+        // Cria a tag de script dinamicamente
+        const script = document.createElement('script');
+        script.src = `${WEB_APP_URL}?callback=${callbackName}&cpf=${cpf}&quizId=${questionarioId}`;
+        
+        // Adiciona um tratamento de erro para falhas de rede
+        script.onerror = function() {
             alert('Não foi possível conectar ao servidor para verificação. Tente novamente.');
             btnSubmit.disabled = false;
             btnSubmit.innerHTML = originalButtonText;
-        }
+            document.body.removeChild(script);
+            delete window[callbackName];
+        };
+        
+        // Adiciona o script à página para iniciar a requisição
+        document.body.appendChild(script);
     });
 });
