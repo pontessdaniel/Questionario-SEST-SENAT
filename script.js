@@ -1,40 +1,68 @@
+// CÓDIGO ATUALIZADO E COMPLETO PARA: script.js
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('municipio-form');
     const btnVoltar = document.getElementById('btn-voltar');
 
-    // Função do botão "Voltar"
+    // --- LÓGICA DE VERIFICAÇÃO ATUALIZADA ---
+    // 1. Descobre qual questionário está sendo acessado pela URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const questionarioId = urlParams.get('q');
+
+    // 2. Define qual "chave" de memória verificar baseado no ID do questionário
+    let chaveLocalStorage = '';
+    if (questionarioId === '1') {
+        chaveLocalStorage = 'emailParticipanteQ1';
+    } else if (questionarioId === '2') {
+        chaveLocalStorage = 'emailParticipanteQ2';
+    }
+
+    // 3. Verifica se já existe um email salvo para ESSE questionário específico
+    if (chaveLocalStorage) {
+        const emailSalvo = localStorage.getItem(chaveLocalStorage);
+        if (emailSalvo) {
+            // Se existir, bloqueia o formulário e avisa o usuário
+            const formContainer = document.querySelector('.form-container');
+            formContainer.innerHTML = `
+                <div class="alert alert-success" style="text-align: center;">
+                    <i class="fas fa-check-circle"></i> 
+                    <strong>Obrigado por participar!</strong>
+                    <p style="margin-top: 10px;">Verificamos que o email <strong>${emailSalvo}</strong> já completou este questionário neste navegador.</p>
+                    <button onclick="window.location.href='index.html'" class="btn btn-primary" style="margin-top: 20px;">
+                        Voltar ao Início
+                    </button>
+                </div>
+            `;
+            return; // Impede o resto do script de ser executado
+        }
+    }
+    // --- FIM DA LÓGICA DE VERIFICAÇÃO ---
+
+
     btnVoltar.addEventListener('click', () => {
-        // Redireciona para a página inicial (mais previsível que voltar no histórico)
-        window.location.href = 'index.html'; 
+        window.location.href = 'index.html';
     });
 
-    // Função do botão "Continuar" (ao submeter o formulário)
     form.addEventListener('submit', function(event) {
-        // Impede o envio padrão do formulário
         event.preventDefault();
 
-        // Verifica se todos os campos obrigatórios foram preenchidos
         if (this.checkValidity()) {
-            // Coleta os dados dos campos
             const nome = encodeURIComponent(document.getElementById('nome').value);
             const cpf = encodeURIComponent(document.getElementById('cpf').value);
+            const email = encodeURIComponent(document.getElementById('email').value);
             const cidade = encodeURIComponent(document.getElementById('municipio').value);
             const estado = encodeURIComponent(document.getElementById('estado').value);
             const van = encodeURIComponent(document.getElementById('van').value);
 
-            // Lógica para decidir para qual questionário ir
-            const urlParams = new URLSearchParams(window.location.search);
-            const questionarioId = urlParams.get('q');
             let proximaPagina = questionarioId === '2' ? 'questionario2.html' : 'questionario1.html';
             
-            // Monta a URL final com os dados e redireciona o usuário
-            proximaPagina += `?nome=${nome}&cpf=${cpf}&cidade=${cidade}&estado=${estado}&van=${van}`;
+            proximaPagina += `?nome=${nome}&cpf=${cpf}&email=${email}&cidade=${cidade}&estado=${estado}&van=${van}`;
+            
             window.location.href = proximaPagina;
 
         } else {
-            // Se algum campo estiver faltando, avisa o usuário
             alert('Por favor, preencha todos os campos obrigatórios.');
-            this.reportValidity(); // Mostra visualmente quais campos faltam
+            this.reportValidity();
         }
     });
 });
