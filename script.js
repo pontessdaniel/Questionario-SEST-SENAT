@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // COLE AQUI A URL DO SEU WEB APP DO GOOGLE SHEETS
-    const WEB_APP_URL = 'COLE_A_URL_AQUI';
+    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec';
 
     const form = document.getElementById('municipio-form');
     const btnVoltar = document.getElementById('btn-voltar');
