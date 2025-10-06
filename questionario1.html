@@ -6,7 +6,6 @@
     <title>Questionário de Segurança Viária - ONSV</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -148,7 +147,7 @@
             <button type="button" id="btn-concluir" class="btn-submit">Concluir Questionário</button>
         </div>
     </div>
-
+    
     </div>
 
 <script>
@@ -164,14 +163,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const correctAnswers = { q1: 'transito', q2: 'transito', q3: '15-29', q4: 'ambos', q5: 'motociclistas', q6: '3-pib', q7: 'velocidade', q8: '400-mais', q9: 'morte-frente', q10: 'investir' };
     
-    // Função para pegar dados do participante da URL
+    // Função para pegar dados do participante da URL (incluindo o email)
     function getDadosParticipanteFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         const dados = {
-            nome: urlParams.get('nome'), cpf: urlParams.get('cpf'), cidade: urlParams.get('cidade'),
-            estado: urlParams.get('estado'), van: urlParams.get('van')
+            nome: urlParams.get('nome'), 
+            cpf: urlParams.get('cpf'), 
+            email: urlParams.get('email'), // Adicionado para pegar o email
+            cidade: urlParams.get('cidade'),
+            estado: urlParams.get('estado'), 
+            van: urlParams.get('van')
         };
-        return (!dados.cpf || !dados.nome) ? null : dados;
+        // Checa se os dados essenciais estão presentes
+        return (!dados.cpf || !dados.nome || !dados.email) ? null : dados;
     }
 
     form.addEventListener('submit', function(event) {
@@ -201,16 +205,23 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const dadosParticipante = getDadosParticipanteFromURL();
         if (!dadosParticipante) {
-            alert('Erro: Dados do participante não encontrados. Por favor, preencha o formulário inicial novamente.');
+            alert('Erro: Dados do participante (incluindo email) não encontrados. Por favor, preencha o formulário inicial novamente.');
             window.location.href = 'index.html';
             return;
         }
 
+        // Salva o email na memória específica do Questionário 1
+        localStorage.setItem('emailParticipanteQ1', decodeURIComponent(dadosParticipante.email));
+
         const dataToSend = {
             questionarioTipo: 1, pontuacao: score,
-            nome: decodeURIComponent(dadosParticipante.nome), cpf: decodeURIComponent(dadosParticipante.cpf),
-            cidade: decodeURIComponent(dadosParticipante.cidade), estado: decodeURIComponent(dadosParticipante.estado),
-            van: decodeURIComponent(dadosParticipante.van), respostaQ11: document.getElementById('q11').value
+            nome: decodeURIComponent(dadosParticipante.nome), 
+            cpf: decodeURIComponent(dadosParticipante.cpf),
+            email: decodeURIComponent(dadosParticipante.email),
+            cidade: decodeURIComponent(dadosParticipante.cidade), 
+            estado: decodeURIComponent(dadosParticipante.estado),
+            van: decodeURIComponent(dadosParticipante.van), 
+            respostaQ11: document.getElementById('q11').value
         };
 
         fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', cache: 'no-cache', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dataToSend) })
@@ -219,6 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     function exibirResultados(score) {
+        // Marca visualmente as respostas
         Object.keys(correctAnswers).forEach(key => {
             const selectedOption = form.querySelector(`input[name="${key}"]:checked`);
             if (selectedOption) {
@@ -232,26 +244,4 @@ document.addEventListener('DOMContentLoaded', () => {
         respostasCorrigidasContainer.appendChild(formContent);
         formContent.querySelector('.btn-submit').style.display = 'none';
 
-        resultadoFinalContainer.innerHTML = `Você acertou <span class="text-blue-600">${score}</span> de <span class="text-blue-600">${Object.keys(correctAnswers).length}</span> perguntas.`;
-        
-        questionarioWrapper.style.display = 'none';
-        resultadoWrapper.style.display = 'block';
-
-        // --- MUDANÇA 1: Altera o texto e a função do botão de concluir ---
-        btnConcluir.textContent = 'Concluir questionário, muito obrigado!';
-        btnConcluir.onclick = () => { // Usamos 'onclick' aqui para substituir qualquer listener anterior
-            window.location.href = 'index.html';
-        };
-
-        // --- MUDANÇA 2: Impede o usuário de voltar a página ---
-        history.pushState(null, '', location.href); // Cria um novo estado no histórico
-        window.addEventListener('popstate', function(event) {
-            // Se o usuário tentar voltar, redireciona para o início
-            window.location.href = 'index.html';
-        });
-    }
-});
-</script>
-
-</body>
-</html>
+        resultadoFinalContainer.innerHTML = `Você acertou <span class="text-blue-600">${score}</span> de <span class="text-blue-600">${Object.keys(correctAnswers).length}
