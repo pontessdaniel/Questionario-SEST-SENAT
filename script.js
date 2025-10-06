@@ -1,7 +1,6 @@
-// CÓDIGO FINAL E CORRIGIDO - EVITA O PREFLIGHT REQUEST DO CORS
+// CÓDIGO FINAL - VOLTANDO A USAR application/json
 
 document.addEventListener('DOMContentLoaded', () => {
-    // COLE AQUI A URL DO SEU WEB APP DO GOOGLE SHEETS
     const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec';
 
     const form = document.getElementById('municipio-form');
@@ -39,10 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(WEB_APP_URL, {
                 method: 'POST',
                 cache: 'no-cache',
-                // ==========================================================
-                // AQUI ESTÁ A MUDANÇA QUE CORRIGE O ERRO DE CORS
-                // ==========================================================
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                // Voltamos para o application/json, que é o correto
+                headers: { 'Content-Type': 'application/json' },
                 redirect: 'follow',
                 body: JSON.stringify(verificationData)
             });
