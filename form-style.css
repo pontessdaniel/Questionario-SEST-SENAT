@@ -28,9 +28,14 @@ body {
 }
 
 .container {
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* Em telas de PC, o container do cabeçalho é mais largo */
+.main-header .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
 /* ---- Estilos do Cabeçalho Principal (header.main-header) ---- */
@@ -39,12 +44,6 @@ body {
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     padding: 10px 0;
-}
-
-.main-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .logo {
@@ -64,52 +63,15 @@ body {
     font-size: 1.1em;
 }
 
-.logo strong {
-    font-weight: 700;
-}
-
-.main-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-}
-
-.main-nav a {
-    text-decoration: none;
-    color: var(--text-color-muted);
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-
-.main-nav a:hover {
-    color: var(--primary-color);
-}
-
-.btn-login {
-    background-color: var(--primary-color);
-    color: var(--light-bg);
-    padding: 10px 20px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.btn-login:hover {
-    background-color: #e67e22;
-}
-
 /* ---- Estilos da Página de Formulário ---- */
 .form-page {
-    padding: 40px 10px;
-    min-height: calc(100vh - 75px);
-    background: linear-gradient(120deg, #fdf6e3 0%, #f4f7f9 100%);
+    padding: 40px 0;
 }
 
+/* Em telas de PC, o container do formulário é mais estreito e centralizado */
 .form-container {
     max-width: 600px;
     margin: 0 auto;
-    transition: max-width 0.3s;
 }
 
 .alert {
@@ -119,18 +81,8 @@ body {
     border: 1px solid transparent;
     font-size: 0.9em;
 }
-
-.alert-success {
-    background-color: #e7f5ee;
-    border-color: #b8e0c9;
-    color: var(--success-color);
-}
-
-.alert-warning {
-    background-color: #fff9e6;
-    border-color: #ffecb3;
-    color: var(--warning-color);
-}
+.alert-success { background-color: #e7f5ee; border-color: #b8e0c9; color: var(--success-color); }
+.alert-warning { background-color: #fff9e6; border-color: #ffecb3; color: var(--warning-color); }
 
 .form-header {
     text-align: center;
@@ -149,16 +101,15 @@ body {
     box-shadow: 0 2px 10px rgba(243, 156, 18, 0.18);
 }
 
-.header-icon img {
-    width: 28px;
-    height: 28px;
+.header-icon i {
+    color: #fff;
+    font-size: 28px;
 }
 
 .form-header h1 {
     font-size: 1.7em;
     color: var(--dark-bg);
     font-weight: 700;
-    letter-spacing: 0.5px;
 }
 
 .form-header p {
@@ -173,78 +124,36 @@ form {
     border-radius: 18px;
     box-shadow: 0 8px 32px rgba(243, 156, 18, 0.10), 0 1.5px 8px rgba(44, 62, 80, 0.07);
     border: 1px solid #f7d7a6;
-    transition: box-shadow 0.3s;
 }
 
-fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
-}
+fieldset { border: none; padding: 0; margin: 0; }
 
-legend {
-    display: none;
-}
+.form-section-header { margin-bottom: 24px; }
+.form-section-header h3 { font-size: 1.2em; font-weight: 600; color: var(--dark-bg); margin-bottom: 4px; }
+.form-section-header p { font-size: 0.9em; color: var(--text-color-muted); }
 
-/* Espaçamento e Alinhamento da Seção */
-.form-section-header {
-    margin-bottom: 24px;
-}
-
-.form-section-header h3 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 1.2em;
-    font-weight: 600;
-    color: var(--dark-bg);
-    margin-bottom: 4px;
-}
-
-.form-section-header p {
-    font-size: 0.9em;
-    color: var(--text-color-muted);
-    line-height: 1.4;
-}
-
-.form-group {
-    margin-bottom: 24px; /* Aumentado para mais espaço entre os campos */
-}
+.form-group { margin-bottom: 24px; }
 
 .form-group-split {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
-
-.form-group-split .form-group {
-    flex: 1 1 48%;
-}
+.form-group-split .form-group { flex: 1 1 48%; }
 
 label {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     margin-bottom: 8px;
     font-weight: 600;
     font-size: 0.95em;
     color: var(--dark-bg);
 }
+label i { color: var(--primary-color); }
+label .required { color: #dc3545; font-weight: 500; margin-left: auto; }
 
-label i {
-    color: var(--primary-color);
-}
-
-label .required {
-    color: #dc3545;
-    font-size: 0.8em;
-    font-weight: 500;
-    letter-spacing: 0.1px; /* Espaçamento leve */
-    margin-left: auto; /* Empurra para a direita */
-}
-
-input,
-select {
+input, select {
     width: 100%;
     padding: 12px 14px;
     border: 1.5px solid var(--border-color);
@@ -254,14 +163,7 @@ select {
     background: #fafbfc;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
-
-input::placeholder,
-select:disabled {
-    color: #ccc;
-}
-
-input:focus,
-select:focus {
+input:focus, select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.13);
     outline: none;
@@ -269,7 +171,8 @@ select:focus {
 
 .form-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between; /* <-- MUDANÇA: Alinha um botão para cada lado */
+    align-items: center;
     gap: 12px;
     margin-top: 32px;
 }
@@ -281,47 +184,41 @@ select:focus {
     font-size: 1em;
     border: none;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-    box-shadow: 0 1px 4px rgba(243, 156, 18, 0.08);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
-
-.btn-primary {
-    background: linear-gradient(90deg, #f39c12 80%, #ffc107 100%);
-    color: #fff;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(90deg, #e67e22 80%, #f7b731 100%);
-    color: #fff;
-}
-
-.btn-secondary {
-    background: #f4f7f9;
-    color: var(--text-color-muted);
-    border: 1.5px solid var(--border-color);
-}
-
-.btn-secondary:hover {
-    background: #fdf6e3;
-    color: var(--primary-color);
-    border-color: #f7d7a6;
-}
+.btn-primary { background: linear-gradient(90deg, #f39c12 80%, #ffc107 100%); color: #fff; }
+.btn-primary:hover { background: linear-gradient(90deg, #e67e22 80%, #f7b731 100%); color: #fff; }
+.btn-secondary { background: #f4f7f9; color: var(--text-color-muted); border: 1.5px solid var(--border-color); }
+.btn-secondary:hover { background: #fdf6e3; color: var(--primary-color); border-color: #f7d7a6; }
 
 .form-footer-note {
     text-align: center;
     font-size: 0.85em;
     color: var(--text-color-muted);
-    margin-top: 18px;
-    opacity: 0.85;
+    margin-top: 24px;
 }
 
-@media (max-width: 600px) {
+/* ---- Estilos para Telas de Celular (Responsividade) ---- */
+@media (max-width: 768px) {
+    .main-header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
     .form-group-split {
         flex-direction: column;
         gap: 0;
     }
     
-    .form-group-split .form-group {
-        margin-bottom: 16px;
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%; /* Botões ocupam a largura total e se empilham */
+        justify-content: center;
     }
 }
