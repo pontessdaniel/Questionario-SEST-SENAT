@@ -1,4 +1,4 @@
-// CÓDIGO FINAL - FAZ A VERIFICAÇÃO E BLOQUEIA O USUÁRIO
+// CÓDIGO FINAL E CORRIGIDO - EVITA O PREFLIGHT REQUEST DO CORS
 
 document.addEventListener('DOMContentLoaded', () => {
     // COLE AQUI A URL DO SEU WEB APP DO GOOGLE SHEETS
@@ -36,27 +36,26 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         try {
-            // Faz a chamada ao Google Sheets usando POST e esperando a resposta
             const response = await fetch(WEB_APP_URL, {
                 method: 'POST',
-                // NÃO usamos mais 'no-cors'
                 cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
+                // ==========================================================
+                // AQUI ESTÁ A MUDANÇA QUE CORRIGE O ERRO DE CORS
+                // ==========================================================
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 redirect: 'follow',
                 body: JSON.stringify(verificationData)
             });
             
             const result = await response.json();
 
-            // Analisa a resposta e bloqueia se o CPF foi encontrado
             if (result.status === 'found') {
                 alert('Este CPF já respondeu a este questionário. Obrigado!');
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = originalButtonText;
-                return; // PARA O PROCESSO AQUI
+                return;
             }
             
-            // Se o CPF não foi encontrado, redireciona para o questionário
             if (result.status === 'not_found') {
                 const nome = encodeURIComponent(document.getElementById('nome').value);
                 const email = encodeURIComponent(document.getElementById('email').value);
@@ -69,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 window.location.href = proximaPagina;
             } else {
-                // Se deu um erro inesperado no script do Google
                 throw new Error(result.message || 'Ocorreu um erro desconhecido na verificação.');
             }
 
