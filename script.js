@@ -1,7 +1,8 @@
-// CÓDIGO FINAL - VOLTANDO A USAR application/json
+// CÓDIGO FINAL - FAZ A VERIFICAÇÃO E BLOQUEIA O USUÁRIO
 
 document.addEventListener('DOMContentLoaded', () => {
-    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbz-mBfyfRxPhW50MVLYPJ8w5Kio8LyDNEAj1q62JUQT/dev';
+    // COLE AQUI A URL DO SEU WEB APP (A QUE TERMINA COM /exec)
+    const WEB_APP_URL = 'https://script.google.com/a/macros/onsv.org.br/s/AKfycbxoYs_PGBuofxe3JiQ-UOkQWvnOLlh8EmwTL769pmOsGP-O7UdZoWM0dvlqLnguh2dsvQ/exec';
 
     const form = document.getElementById('municipio-form');
     const btnVoltar = document.getElementById('btn-voltar');
@@ -38,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(WEB_APP_URL, {
                 method: 'POST',
                 cache: 'no-cache',
-                // Voltamos para o application/json, que é o correto
                 headers: { 'Content-Type': 'application/json' },
                 redirect: 'follow',
                 body: JSON.stringify(verificationData)
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Este CPF já respondeu a este questionário. Obrigado!');
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = originalButtonText;
-                return;
+                return; // PARA O PROCESSO AQUI
             }
             
             if (result.status === 'not_found') {
@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 window.location.href = proximaPagina;
             } else {
+                // Se deu um erro inesperado no script do Google
                 throw new Error(result.message || 'Ocorreu um erro desconhecido na verificação.');
             }
 
