@@ -4,44 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autoavaliação Municipal ONSV</title>
+    
     <link rel="stylesheet" href="form-style.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Estilos adicionados para responsividade */
-        @media (max-width: 768px) {
-            .main-header .container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .main-nav {
-                width: 100%;
-            }
-            .main-nav ul {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-            .form-page {
-                padding: 20px 10px;
-            }
-            .form-group-split {
-                flex-direction: column;
-                gap: 0; /* Remove o gap para usar o margin-bottom do form-group */
-            }
-            .form-group-split .form-group {
-                margin-bottom: 24px; /* Garante espaçamento quando empilhado */
-            }
-            .form-actions {
-                flex-direction: column;
-            }
-            .form-actions .btn {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
 
@@ -50,6 +19,7 @@
             <a href="index.html" class="logo">
                 <img src="imagens/logo_observatorio-1.png" alt="Logo ONSV">
                 <span>Autoavaliação Municipal <strong>ONSV</strong></span>
+            </a>
         </div>
     </header>
 
@@ -66,7 +36,7 @@
 
             <div class="form-header">
                 <div class="header-icon">
-                    <i class="fas fa-city" style="color: #fff; font-size: 28px;"></i>
+                    <i class="fas fa-city"></i>
                 </div>
                 <h1>Dados</h1>
                 <p>Preencha todos os dados básicos para iniciar a autoavaliação.</p>
@@ -81,21 +51,21 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="nome"><i class="fas fa-user"></i> Nome Completo * <span>OBRIGATÓRIO</span></label>
+                        <label for="nome"><i class="fas fa-user"></i> Nome Completo * <span class="required">OBRIGATÓRIO</span></label>
                         <input type="text" id="nome" name="nome" placeholder="Insira seu nome completo" required>
                     </div>
                     <div class="form-group">
-                        <label for="cpf"><i class="fas fa-id-card"></i> CPF (Apenas Números) *<span></span></label>
+                        <label for="cpf"><i class="fas fa-id-card"></i> CPF (Apenas Números) *</label>
                         <input type="text" id="cpf" name="cpf" placeholder="Insira seu CPF" required>
                     </div>
                     
                     <div class="form-group-split">
                          <div class="form-group">
-                            <label for="municipio"><i class="fas fa-map-marker-alt"></i> Município *<span></span></label>
+                            <label for="municipio"><i class="fas fa-map-marker-alt"></i> Município *</label>
                             <input type="text" id="municipio" name="municipio" placeholder="Nome completo do município" required>
                         </div>
                         <div class="form-group">
-                            <label for="estado"><i class="fas fa-globe"></i> Estado/UF *<span></span></label>
+                            <label for="estado"><i class="fas fa-globe"></i> Estado/UF *</label>
                             <select id="estado" name="estado" required>
                                 <option value="" disabled selected>Selecione o estado</option>
                                 <option value="AC">Acre</option>
@@ -131,63 +101,27 @@
 
                     <div class="form-group-split">
                         <div class="form-group">
-                            <label for="van"><i class="fas fa-bus"></i> Número da Van *<span></span></label>
+                            <label for="van"><i class="fas fa-bus"></i> Número da Van *</label>
                             <input type="text" id="van" name="van" placeholder="Insira o número da van" required>
                         </div>
                         <div class="form-group">
-                            <label for="email"><i class="fas fa-envelope"></i> E-mail *<span></span></label>
+                            <label for="email"><i class="fas fa-envelope"></i> E-mail *</label>
                             <input type="email" id="email" name="email" placeholder="email@provedor.com" required>
                         </div>
                     </div>
                 </fieldset>
 
                 <div class="form-actions">
-                    <button id="btn-voltar" onclick="window.history.back()">⬅ Voltar</button>
+                    <button type="button" class="btn btn-secondary" id="btn-voltar"><i class="fas fa-arrow-left"></i> Voltar</button>
                     <button type="submit" class="btn btn-primary">Continuar <i class="fas fa-arrow-right"></i></button>
                 </div>
             </form>
             
-            <p class="form-footer-note"><i class="fas fa-info-circle"></i> Campos obrigatórios - Protegidos por constraints de banco. O sistema agora impede automaticamente o salvamento de dados incompletos.</p>
+            <p class="form-footer-note"><i class="fas fa-info-circle"></i> Campos obrigatórios - Protegidos por constraints de banco.</p>
         </div>
     </main>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('municipio-form');
-        const btnVoltar = document.getElementById('btn-voltar');
-
-        btnVoltar.addEventListener('click', () => {
-            window.location.href = 'index.html';
-        });
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            if (this.checkValidity()) {
-                // Pega os dados do formulário e codifica para URL
-                const nome = encodeURIComponent(document.getElementById('nome').value);
-                const cpf = encodeURIComponent(document.getElementById('cpf').value);
-                const cidade = encodeURIComponent(document.getElementById('municipio').value);
-                const estado = encodeURIComponent(document.getElementById('estado').value);
-                const van = encodeURIComponent(document.getElementById('van').value);
-
-                // Lógica de redirecionamento baseada na URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const questionarioId = urlParams.get('q');
-                let proximaPagina = questionarioId === '2' ? 'questionario2.html' : 'questionario1.html';
-                
-                // Adiciona os dados como parâmetros na URL de destino
-                proximaPagina += ?nome=${nome}&cpf=${cpf}&cidade=${cidade}&estado=${estado}&van=${van};
-                
-                window.location.href = proximaPagina;
-
-            } else {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                this.reportValidity();
-            }
-        });
-    });
-    </script>
+    <script src="form-script.js"></script>
 
 </body>
 </html>
