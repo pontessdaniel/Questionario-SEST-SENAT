@@ -152,31 +152,31 @@
     </main>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('municipio-form');
-        const btnVoltar = document.getElementById('btn-voltar');
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('municipio-form');
+    const btnVoltar = document.getElementById('btn-voltar');
 
+    if (btnVoltar) {
         btnVoltar.addEventListener('click', () => {
             window.location.href = 'index.html';
         });
+    }
 
+    if (form) {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
             if (this.checkValidity()) {
-                // Pega os dados do formulário e codifica para URL
                 const nome = encodeURIComponent(document.getElementById('nome').value);
                 const cpf = encodeURIComponent(document.getElementById('cpf').value);
                 const cidade = encodeURIComponent(document.getElementById('municipio').value);
                 const estado = encodeURIComponent(document.getElementById('estado').value);
                 const van = encodeURIComponent(document.getElementById('van').value);
 
-                // Lógica de redirecionamento baseada na URL
                 const urlParams = new URLSearchParams(window.location.search);
                 const questionarioId = urlParams.get('q');
                 let proximaPagina = questionarioId === '2' ? 'questionario2.html' : 'questionario1.html';
                 
-                // Adiciona os dados como parâmetros na URL de destino
                 proximaPagina += `?nome=${nome}&cpf=${cpf}&cidade=${cidade}&estado=${estado}&van=${van}`;
                 
                 window.location.href = proximaPagina;
@@ -186,8 +186,10 @@
                 this.reportValidity();
             }
         });
-    });
-    </script>
+    }
+});
+</script>
+
 
 </body>
 </html>
