@@ -1,4 +1,6 @@
-/* ---- Estilos Gerais ---- */
+/* ==========================================================
+   ESTILOS GERAIS E VARIÁVEIS
+   ========================================================== */
 :root {
     --primary-color: #f39c12; /* Laranja ONSV */
     --secondary-color: #6c757d;
@@ -14,10 +16,16 @@
     --font-family: 'Poppins', sans-serif;
 }
 
+/* Reset e estrutura */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Remove barra branca lateral */
 }
 
 body {
@@ -27,13 +35,16 @@ body {
     line-height: 1.6;
 }
 
+/* Container genérico */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* ---- Estilos do Cabeçalho Principal (header.main-header) ---- */
+/* ==========================================================
+   CABEÇALHO
+   ========================================================== */
 .main-header {
     background-color: var(--light-bg);
     border-bottom: 1px solid var(--border-color);
@@ -99,19 +110,33 @@ body {
     background-color: #e67e22;
 }
 
-/* ---- Estilos da Página de Formulário ---- */
+/* ==========================================================
+   PÁGINA DE FORMULÁRIO
+   ========================================================== */
 .form-page {
-    padding: 40px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 15px;
     min-height: calc(100vh - 75px);
     background: linear-gradient(120deg, #fdf6e3 0%, #f4f7f9 100%);
 }
 
+/* Container principal do formulário */
 .form-container {
+    width: 100%;
     max-width: 600px;
-    margin: 0 auto;
-    transition: max-width 0.3s;
+    background-color: var(--light-bg);
+    border-radius: 18px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 32px rgba(243, 156, 18, 0.10), 0 1.5px 8px rgba(44, 62, 80, 0.07);
+    border: 1px solid #f7d7a6;
+    transition: all 0.3s ease;
 }
 
+/* ==========================================================
+   ALERTAS
+   ========================================================== */
 .alert {
     padding: 15px 20px;
     margin-bottom: 20px;
@@ -132,6 +157,9 @@ body {
     color: var(--warning-color);
 }
 
+/* ==========================================================
+   CABEÇALHO DO FORMULÁRIO
+   ========================================================== */
 .form-header {
     text-align: center;
     margin-bottom: 24px;
@@ -167,13 +195,14 @@ body {
     margin-top: 4px;
 }
 
+/* ==========================================================
+   FORMULÁRIO
+   ========================================================== */
 form {
     background-color: var(--light-bg);
-    padding: 28px 24px;
+    padding: 0;
     border-radius: 18px;
-    box-shadow: 0 8px 32px rgba(243, 156, 18, 0.10), 0 1.5px 8px rgba(44, 62, 80, 0.07);
-    border: 1px solid #f7d7a6;
-    transition: box-shadow 0.3s;
+    border: none;
 }
 
 fieldset {
@@ -186,7 +215,7 @@ legend {
     display: none;
 }
 
-/* Espaçamento e Alinhamento da Seção */
+/* Seção de título do bloco */
 .form-section-header {
     margin-bottom: 24px;
 }
@@ -207,8 +236,9 @@ legend {
     line-height: 1.4;
 }
 
+/* Grupos de campos */
 .form-group {
-    margin-bottom: 24px; /* Aumentado para mais espaço entre os campos */
+    margin-bottom: 24px;
 }
 
 .form-group-split {
@@ -235,14 +265,6 @@ label i {
     color: var(--primary-color);
 }
 
-label .required {
-    color: #dc3545;
-    font-size: 0.8em;
-    font-weight: 500;
-    letter-spacing: 0.1px; /* Espaçamento leve */
-    margin-left: auto; /* Empurra para a direita */
-}
-
 input,
 select {
     width: 100%;
@@ -267,6 +289,9 @@ select:focus {
     outline: none;
 }
 
+/* ==========================================================
+   BOTÕES E AÇÕES
+   ========================================================== */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -307,6 +332,9 @@ select:focus {
     border-color: #f7d7a6;
 }
 
+/* ==========================================================
+   RODAPÉ / NOTAS
+   ========================================================== */
 .form-footer-note {
     text-align: center;
     font-size: 0.85em;
@@ -315,13 +343,53 @@ select:focus {
     opacity: 0.85;
 }
 
-@media (max-width: 600px) {
+/* ==========================================================
+   RESPONSIVIDADE
+   ========================================================== */
+
+/* Tablets e notebooks pequenos */
+@media (max-width: 992px) {
     .form-group-split {
         flex-direction: column;
         gap: 0;
     }
-    
+
     .form-group-split .form-group {
-        margin-bottom: 16px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .form-container {
+        max-width: 90%;
+    }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .form-header h1 {
+        font-size: 1.4em;
+    }
+
+    .form-header p {
+        font-size: 0.9em;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .alert {
+        font-size: 0.85em;
+        padding: 10px 14px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
     }
 }
