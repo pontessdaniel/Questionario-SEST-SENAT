@@ -222,3 +222,10 @@ input:focus, select:focus {
         justify-content: center;
     }
 }
+
+.form-text-observation {
+    font-size: 0.85em; /* Tamanho da fonte um pouco menor */
+    color: var(--text-color-muted); /* Cor de texto suave */
+    margin-top: 8px; /* Espaçamento acima da observação */
+    padding-left: 5px; /* Leve recuo para alinhar com o texto */
+}
