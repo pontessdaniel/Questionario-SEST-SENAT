@@ -268,3 +268,62 @@ h1, h2, h3, h4 {
         gap: 30px;
     }
 }
+
+/* Cole ou substitua este bloco no final do seu style.css */
+
+@media (max-width: 768px) {
+    .main-header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .logo img {
+        /* Ajusta o tamanho do logo no header para celular */
+        height: 120px;
+    }
+
+    .logo span {
+        font-size: 20px;
+    }
+
+    .main-nav {
+        display: none; /* Esconde o menu principal em telas pequenas */
+    }
+
+    .hero-content h1 {
+        /* Aumenta o título principal no celular */
+        font-size: 2.8em; 
+    }
+
+    .hero-content p {
+        /* Aumenta o parágrafo no celular */
+        font-size: 1.1em;
+    }
+
+    .hero-content .btn-primary {
+        /* Torna os botões maiores e mais fáceis de tocar */
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%; /* Ocupa a largura total */
+        padding: 16px; /* Mais espaço interno (altura) */
+        font-size: 1.2em; /* Fonte maior */
+    }
+
+    .hero-content a.btn-primary:not(:last-child) {
+        margin-bottom: 15px;
+    }
+    
+    .footer-col {
+        /* Ajustes no rodapé para celular */
+        font-size: 1.1em; /* Aumenta a fonte de todo o texto do rodapé */
+    }
+    
+    .footer-logo {
+        height: 80px; /* Aumenta o logo do rodapé */
+    }
+
+    .main-footer .container {
+        gap: 30px;
+    }
+}
