@@ -229,3 +229,34 @@ input:focus, select:focus {
     margin-top: 8px; /* Espaçamento acima da observação */
     padding-left: 5px; /* Leve recuo para alinhar com o texto */
 }
+
+/* Estilo para o aviso de LGPD */
+.lgpd-alert {
+    background-color: #e6f7ff; /* Um azul bem claro */
+    border-color: #91d5ff;     /* Uma borda azul mais forte */
+    color: #096dd9;            /* Texto azul */
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start; /* Alinha o ícone e o texto no topo */
+    gap: 15px; /* Espaço entre o ícone e o texto */
+}
+
+.lgpd-alert i {
+    font-size: 1.8em; /* Ícone um pouco maior */
+    color: #0050b3;   /* Cor do ícone */
+}
+
+.lgpd-alert p {
+    margin: 0 0 10px 0; /* Espaçamento entre parágrafos, último sem margin-bottom */
+    line-height: 1.5;
+}
+
+.lgpd-alert p:last-child {
+    margin-bottom: 0;
+}
+
+.lgpd-alert strong {
+    color: #0050b3; /* Deixa o "Aviso de Privacidade" mais escuro */
+}
